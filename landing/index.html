@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoFlow — AI-Powered Team Automation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; color: #1a1a2e; background: #fff; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        header { padding: 20px 0; position: fixed; width: 100%; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 100; border-bottom: 1px solid #f0f0f0; }
+        .nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: 800; color: #6366f1; display: flex; align-items: center; gap: 8px; }
+        .logo-icon { width: 32px; height: 32px; background: #6366f1; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 18px; }
+        .nav-links { display: flex; gap: 32px; align-items: center; }
+        .nav-links a { text-decoration: none; color: #64748b; font-weight: 500; font-size: 15px; transition: color 0.2s; }
+        .nav-links a:hover { color: #6366f1; }
+        .btn { padding: 10px 24px; border-radius: 8px; font-weight: 600; font-size: 15px; cursor: pointer; border: none; transition: all 0.2s; text-decoration: none; display: inline-block; }
+        .btn-primary { background: #6366f1; color: white; }
+        .btn-primary:hover { background: #4f46e5; transform: translateY(-1px); }
+        .btn-outline { background: transparent; color: #6366f1; border: 2px solid #6366f1; }
+        .btn-outline:hover { background: #6366f1; color: white; }
+        .btn-large { padding: 14px 32px; font-size: 16px; }
+
+        .hero { padding: 140px 0 80px; text-align: center; background: linear-gradient(180deg, #f8fafc 0%, #fff 100%); }
+        .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: #eef2ff; color: #6366f1; padding: 8px 16px; border-radius: 100px; font-size: 14px; font-weight: 600; margin-bottom: 24px; }
+        .hero h1 { font-size: 56px; font-weight: 800; line-height: 1.1; margin-bottom: 24px; color: #0f172a; }
+        .hero h1 span { color: #6366f1; }
+        .hero-subtitle { font-size: 20px; color: #64748b; max-width: 640px; margin: 0 auto 40px; }
+        .hero-cta { display: flex; gap: 16px; justify-content: center; margin-bottom: 60px; }
+        .hero-stats { display: flex; justify-content: center; gap: 48px; margin-top: 40px; }
+        .stat { text-align: center; }
+        .stat-number { font-size: 32px; font-weight: 800; color: #0f172a; }
+        .stat-label { font-size: 14px; color: #64748b; font-weight: 500; }
+
+        .screenshots { padding: 80px 0; background: #f8fafc; }
+        .screenshots-header { text-align: center; margin-bottom: 48px; }
+        .screenshots-header h2 { font-size: 40px; font-weight: 800; margin-bottom: 16px; }
+        .screenshots-header p { color: #64748b; font-size: 18px; }
+        .screenshots-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 32px; }
+        .screenshot-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; }
+        .screenshot-card img { width: 100%; height: auto; display: block; }
+        .screenshot-card .caption { padding: 20px; }
+        .screenshot-card .caption h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+        .screenshot-card .caption p { color: #64748b; font-size: 15px; }
+
+        .features { padding: 80px 0; }
+        .features-header { text-align: center; margin-bottom: 64px; }
+        .features-header h2 { font-size: 40px; font-weight: 800; margin-bottom: 16px; }
+        .features-header p { color: #64748b; font-size: 18px; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
+        .feature-card { padding: 32px; border-radius: 16px; border: 1px solid #e2e8f0; transition: all 0.2s; }
+        .feature-card:hover { box-shadow: 0 10px 40px -10px rgba(99,102,241,0.15); transform: translateY(-2px); border-color: #6366f1; }
+        .feature-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 20px; }
+        .feature-icon.purple { background: #eef2ff; }
+        .feature-icon.green { background: #ecfdf5; }
+        .feature-icon.blue { background: #eff6ff; }
+        .feature-icon.orange { background: #fff7ed; }
+        .feature-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+        .feature-card p { color: #64748b; font-size: 15px; }
+
+        .pricing { padding: 80px 0; background: #f8fafc; }
+        .pricing-header { text-align: center; margin-bottom: 64px; }
+        .pricing-header h2 { font-size: 40px; font-weight: 800; margin-bottom: 16px; }
+        .pricing-header p { color: #64748b; font-size: 18px; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto; }
+        .pricing-card { background: white; border-radius: 16px; padding: 32px; border: 2px solid #e2e8f0; position: relative; }
+        .pricing-card.popular { border-color: #6366f1; box-shadow: 0 10px 40px -10px rgba(99,102,241,0.2); }
+        .popular-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #6366f1; color: white; padding: 4px 16px; border-radius: 100px; font-size: 12px; font-weight: 700; }
+        .pricing-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+        .pricing-card .price { font-size: 48px; font-weight: 800; color: #0f172a; margin: 16px 0; }
+        .pricing-card .price span { font-size: 16px; color: #64748b; font-weight: 500; }
+        .pricing-card ul { list-style: none; margin: 24px 0; }
+        .pricing-card ul li { padding: 8px 0; color: #64748b; font-size: 15px; display: flex; align-items: center; gap: 8px; }
+        .pricing-card ul li::before { content: "✓"; color: #22c55e; font-weight: 700; }
+        .pricing-card .btn { width: 100%; text-align: center; margin-top: 16px; }
+
+        .faq { padding: 80px 0; }
+        .faq-header { text-align: center; margin-bottom: 48px; }
+        .faq-header h2 { font-size: 40px; font-weight: 800; margin-bottom: 16px; }
+        .faq-list { max-width: 800px; margin: 0 auto; }
+        .faq-item { border-bottom: 1px solid #e2e8f0; padding: 24px 0; }
+        .faq-item h3 { font-size: 18px; font-weight: 700; margin-bottom: 12px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .faq-item p { color: #64748b; font-size: 15px; line-height: 1.7; }
+
+        .cta { padding: 80px 0; text-align: center; background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: white; }
+        .cta h2 { font-size: 40px; font-weight: 800; margin-bottom: 16px; }
+        .cta p { font-size: 18px; opacity: 0.9; margin-bottom: 32px; }
+        .cta .btn { background: white; color: #6366f1; font-size: 16px; padding: 14px 32px; }
+        .cta .btn:hover { background: #f8fafc; }
+
+        footer { padding: 40px 0; text-align: center; color: #64748b; font-size: 14px; border-top: 1px solid #e2e8f0; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .hero-subtitle { font-size: 18px; }
+            .hero-cta { flex-direction: column; align-items: center; }
+            .hero-stats { flex-direction: column; gap: 24px; }
+            .nav-links { display: none; }
+            .screenshots-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="nav">
+                <div class="logo">
+                    <div class="logo-icon">⚡</div>
+                    AutoFlow
+                </div>
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#" class="btn btn-outline">Sign In</a>
+                    <a href="#" class="btn btn-primary">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge">🚀 Now in Beta</div>
+            <h1>Turn Slack chaos into<br><span>organized action</span></h1>
+            <p class="hero-subtitle">AutoFlow uses AI to extract tasks from your Slack conversations, auto-assign them to the right team member, and track everything in a real-time dashboard.</p>
+            <div class="hero-cta">
+                <a href="#" class="btn btn-primary btn-large">Start Free Trial</a>
+                <a href="#screenshots" class="btn btn-outline btn-large">See Demo</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number">10x</div>
+                    <div class="stat-label">Faster Task Creation</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">85%</div>
+                    <div class="stat-label">Assignment Accuracy</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Manual Data Entry</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="screenshots" id="screenshots">
+        <div class="container">
+            <div class="screenshots-header">
+                <h2>See it in action</h2>
+                <p>From Slack message to tracked task in seconds.</p>
+            </div>
+            <div class="screenshots-grid">
+                <div class="screenshot-card">
+                    <img src="slack-demo.png" alt="AutoFlow Slack Integration">
+                    <div class="caption">
+                        <h3>Slack Integration</h3>
+                        <p>Mention AutoFlow in any Slack channel. It instantly extracts tasks, sets priorities, and recommends the best assignee.</p>
+                    </div>
+                </div>
+                <div class="screenshot-card">
+                    <img src="mobile-tasks.png" alt="AutoFlow Mobile Task Dashboard">
+                    <div class="caption">
+                        <h3>Mobile Task Dashboard</h3>
+                        <p>Track all tasks on the go. View pending, completed, and in-progress items with real-time updates from your team.</p>
+                    </div>
+                </div>
+                <div class="screenshot-card">
+                    <img src="analytics.png" alt="AutoFlow Analytics Dashboard">
+                    <div class="caption">
+                        <h3>Team Analytics</h3>
+                        <p>Get insights on workload distribution, task completion rates, and team productivity — all in one view.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <div class="features-header">
+                <h2>Everything your team needs</h2>
+                <p>From task extraction to workload balancing, AutoFlow handles it all.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon purple">🤖</div>
+                    <h3>AI Task Extraction</h3>
+                    <p>Natural language processing turns any Slack message into a structured task with priority, deadline, and category.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon green">🎯</div>
+                    <h3>Smart Auto-Delegation</h3>
+                    <p>AI matches tasks to the best team member based on skills, workload, and past performance.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon blue">📱</div>
+                    <h3>Mobile Dashboard</h3>
+                    <p>Track tasks, view analytics, and manage your team from anywhere with the React Native app.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon orange">📊</div>
+                    <h3>Real-Time Analytics</h3>
+                    <p>Get insights on team productivity, workload distribution, and task completion rates.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <div class="pricing-header">
+                <h2>Simple pricing</h2>
+                <p>Start free, scale as you grow.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Solo</h3>
+                    <div class="price">$15<span>/mo</span></div>
+                    <ul>
+                        <li>Meeting summaries</li>
+                        <li>Basic task extraction</li>
+                        <li>1 workspace</li>
+                        <li>Email support</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline">Get Started</a>
+                </div>
+                <div class="pricing-card popular">
+                    <div class="popular-badge">MOST POPULAR</div>
+                    <h3>Team</h3>
+                    <div class="price">$49<span>/mo</span></div>
+                    <ul>
+                        <li>Everything in Solo</li>
+                        <li>Slack integration</li>
+                        <li>Auto-delegation</li>
+                        <li>3 team members</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary">Get Started</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Business</h3>
+                    <div class="price">$149<span>/mo</span></div>
+                    <ul>
+                        <li>Everything in Team</li>
+                        <li>5 team members</li>
+                        <li>Custom rules</li>
+                        <li>Advanced analytics</li>
+                        <li>Slack + Zoom</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline">Get Started</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">$299<span>/mo</span></div>
+                    <ul>
+                        <li>Unlimited team members</li>
+                        <li>Full analytics suite</li>
+                        <li>Custom integrations</li>
+                        <li>Dedicated support</li>
+                        <li>SLA guarantee</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="faq-header">
+                <h2>Frequently asked</h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <h3>How does AutoFlow extract tasks from Slack?</h3>
+                    <p>AutoFlow uses Groq AI to analyze messages in real-time. When you mention the bot or use natural language like "create a task to...", it automatically extracts the task name, priority, deadline, and category.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>How does auto-delegation work?</h3>
+                    <p>Our AI analyzes each team member's skills, current workload, and past performance to recommend the best person for each task. You can approve or override the suggestion.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Is my data secure?</h3>
+                    <p>Yes. We use Supabase (PostgreSQL) with Row Level Security (RLS) enabled. Your Slack tokens are encrypted and never stored in plain text. We're SOC 2 compliant.</p>
+                </div>
+                <div class="faq-item">
+                    <h3>Can I use AutoFlow without Slack?</h3>
+                    <p>Currently, Slack is our primary integration. We're building support for Microsoft Teams, Discord, and standalone web input. Join the waitlist to get early access.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to automate your workflow?</h2>
+            <p>Join 50+ teams already using AutoFlow to save hours every week.</p>
+            <a href="#" class="btn btn-large">Start Free Trial — No Credit Card</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 AutoFlow. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
